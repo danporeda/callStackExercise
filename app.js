@@ -44,14 +44,17 @@ const btn = document.querySelector('button');
 // }, 1000);
 
 const moveX = (element, amount, delay, callback) => {
-    const clientWidth = document.body.clientWidth;
+    const bodyBoundary = document.body.clientWidth;
     const elRight = element.getBoundingClientRect().right;
     const currLeft = element.getBoundingClientRect().left;
-
-    setTimeout(() => {
-        element.style.transform = `translateX(${currLeft + amount}px)`;
-        if (callback) callback();
-    }, delay);
+    if (elRight + amount > bodyBoundary) {
+        console.log("Can't Move none!")
+    } else {
+        setTimeout(() => {
+            element.style.transform = `translateX(${currLeft + amount}px)`;
+            if (callback) callback();
+        }, delay);
+    }
 }
 
 moveX(btn, 100, 1000, () => {
