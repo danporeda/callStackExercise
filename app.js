@@ -7,7 +7,7 @@ const moveX = (element, amount, delay) => {
             const elRight = element.getBoundingClientRect().right;
             const currLeft = element.getBoundingClientRect().left;
             if (elRight + amount > bodyBoundary) {
-                reject({ status: 404, message: "you're out of room, you cunt"});
+                reject({ bodyBoundary, elRight, amount });
             } else {
                 element.style.transform = `translateX(${currLeft + amount}px)`;
                 resolve();
@@ -21,9 +21,8 @@ moveX(btn, 300, 1000)
     .then(() => moveX(btn, 300, 1000))
     .then(() => moveX(btn, 300, 1000))
     .then(() => moveX(btn, 300, 1000))
-    .catch((err) => {
-        console.log(err.status);
-        console.log(err.message);
+    .catch(({ bodyBoundary, elRight, amount }) => {
+        console.log(`You are short ${(Math.round(elRight + amount) - bodyBoundary)} pixels of space`);
     });
 
 // const repeat = (str, times) => {
