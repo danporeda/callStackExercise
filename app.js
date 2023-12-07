@@ -1,3 +1,31 @@
+
+const btn = document.querySelector('button');
+const moveX = (element, amount, delay) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const bodyBoundary = document.body.clientWidth;
+            const elRight = element.getBoundingClientRect().right;
+            const currLeft = element.getBoundingClientRect().left;
+            if (elRight + amount > bodyBoundary) {
+                reject({ status: 404, message: "you're out of room, you cunt"});
+            } else {
+                element.style.transform = `translateX(${currLeft + amount}px)`;
+                resolve();
+            }
+        }, delay);
+    })
+};
+
+moveX(btn, 300, 1000)
+    .then(() => moveX(btn, 300, 1000))
+    .then(() => moveX(btn, 300, 1000))
+    .then(() => moveX(btn, 300, 1000))
+    .then(() => moveX(btn, 300, 1000))
+    .catch((err) => {
+        console.log(err.status);
+        console.log(err.message);
+    });
+
 // const repeat = (str, times) => {
 //     let result = '';
 //     for (let i = 0; i < times; i++) {
@@ -25,8 +53,6 @@
 // makeRant('I love mayonnaise', document.body);
 // makeRant('if you have to cough, please cover your mouth', document.body);
 
-const btn = document.querySelector('button');
-
 // setTimeout(() => {
 //     btn.style.transform = `translateX(100px)`;
 //     setTimeout(() => {
@@ -43,26 +69,42 @@ const btn = document.querySelector('button');
 //     }, 1000);
 // }, 1000);
 
-const moveX = (element, amount, delay, callback) => {
-    const bodyBoundary = document.body.clientWidth;
-    const elRight = element.getBoundingClientRect().right;
-    const currLeft = element.getBoundingClientRect().left;
-    if (elRight + amount > bodyBoundary) {
-        console.log("Can't Move none!")
-    } else {
-        setTimeout(() => {
-            element.style.transform = `translateX(${currLeft + amount}px)`;
-            if (callback) callback();
-        }, delay);
-    }
-}
+// const moveX = (element, amount, delay, onSuccess, onFailure) => {
+//     setTimeout(() => {
+//         const bodyBoundary = document.body.clientWidth;
+//         const elRight = element.getBoundingClientRect().right;
+//         const currLeft = element.getBoundingClientRect().left;
+//         if (elRight + amount > bodyBoundary) {
+//             onFailure();
+//         } else {
+//             element.style.transform = `translateX(${currLeft + amount}px)`;
+//             onSuccess();
+//         }
+//     }, delay);
+// };
 
-moveX(btn, 100, 1000, () => {
-    moveX(btn,100,1000, () => {
-        moveX(btn,100,1000, () => {
-            moveX(btn,100,1000, () => {
-                moveX(btn,100,1000);
-            });
-        });
-    });
-});
+
+// moveX(btn, 100, 1000, () => {
+//     moveX(btn,100,1000, () => {
+//         moveX(btn,100,1000, () => {
+//             moveX(btn,100,1000, () => {
+//                 moveX(btn,100,1000);
+//             });
+//         });
+//     });
+// });
+
+// moveX(btn, 100, 1000, () => {
+//     moveX(btn, 400, 1000, () => {
+//         moveX(btn, 700, 1000, () => {
+//             console.log('REALLY, WE STILL HAVE SCREEN LEFT?');
+//         },
+//         () => {
+//             alert('CANNOT MOVE FURTHER FROM THE TRUTH');
+//         })
+//     }, () => {
+//         alert('CANNOT MOVE FURTHER');
+//     })
+// }, () => {
+//     alert('CANNOT MOVE FURTHER');
+// })
